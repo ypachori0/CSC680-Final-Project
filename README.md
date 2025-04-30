@@ -7,7 +7,7 @@ Simplifies planning a group trip by organizing itineraries, lodging info, and sh
 - Yash  
 - Majd  
 - Thomas  
-- Melle  
+- Michelle  
 
 ## Must-Have Features  
 - Multi-user sign-in with a single trip group code/invite  
