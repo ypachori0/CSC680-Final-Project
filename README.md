@@ -6,7 +6,7 @@ Simplifies planning a group trip by organizing itineraries, lodging info, and sh
 ## Team Members  
 - Yash  
 - Majd  
-- Thomas  
+- Thomas Bercasio - TPBvirus
 - Michelle  
 
 ## Must-Have Features  
