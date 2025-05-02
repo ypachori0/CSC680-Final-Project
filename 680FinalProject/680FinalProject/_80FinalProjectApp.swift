@@ -29,11 +29,42 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct _80FinalProjectApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    let eventData = testBackend()
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             ContentView()
+        }
+    }
+}
+
+
+class testBackend{
+    
+    //function to test pulling data from db.
+    func testData() async -> String {
+        let db = Firestore.firestore()
+        let docRef: DocumentReference = db.collection("events").document("TestEvent")
+        var eventData = ""
+        do {
+          let document = try await docRef.getDocument()
+          if document.exists {
+            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+            eventData = dataDescription
+            print("Document data: \(dataDescription)")
+          } else {
+            print("Document does not exist")
+          }
+        } catch {
+          print("Error getting document: \(error)")
+        }
+        return eventData
+    }
+    
+    func getData(){
+        Task{
+            sampletext = await eventData.testData()
         }
     }
 }
