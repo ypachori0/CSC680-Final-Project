@@ -29,12 +29,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct _80FinalProjectApp: App {
-    let eventData = testBackend()
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    let eventData = testBackend()
     var body: some Scene {
         WindowGroup {
             ContentView()
+            Text("\(eventData.getData())")
         }
     }
 }
@@ -42,31 +42,35 @@ struct _80FinalProjectApp: App {
 
 class testBackend{
     var sampletext: String = ""
+
     
     //function to test pulling data from db.
     func testData() async -> String {
         let db = Firestore.firestore()
-        let docRef: DocumentReference = db.collection("events").document("TestEvent")
+        let docRef: DocumentReference = db.collection("Event").document("TestEvent")
         var eventData = ""
         do {
-          let document = try await docRef.getDocument()
-          if document.exists {
-            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-            eventData = dataDescription
-            print("Document data: \(dataDescription)")
-          } else {
-            print("Document does not exist")
-          }
-        } catch {
-          print("Error getting document: \(error)")
+            let document = try await docRef.getDocument()
+            if document.exists {
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                eventData = dataDescription
+                print("Document data: \(dataDescription)")
+            }
+            else {
+                print("Document does not exist")
+            }
+        }
+        catch {
+            print("Error getting document: \(error)")
         }
         return eventData
     }
     
-    func getData(){
+    func getData() -> String{
         Task{
-            sampletext = await self.testData()
+            sampletext = await testData()
         }
+        return sampletext
     }
 }
 
