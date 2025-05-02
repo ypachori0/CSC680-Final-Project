@@ -27,6 +27,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 }
 
+//main window of project
 @main
 struct _80FinalProjectApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
@@ -39,12 +40,11 @@ struct _80FinalProjectApp: App {
     }
 }
 
-
+@Observable
 class testBackend{
     var sampletext: String = ""
 
-    
-    //function to test pulling data from db.
+    //async function to test pulling data from db.
     func testData() async -> String {
         let db = Firestore.firestore()
         let docRef: DocumentReference = db.collection("Event").document("TestEvent")
@@ -52,9 +52,8 @@ class testBackend{
         do {
             let document = try await docRef.getDocument()
             if document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                let dataDescription = document.data().map(String.init(describing:)) ?? "this gets typed out instead"
                 eventData = dataDescription
-                print("Document data: \(dataDescription)")
             }
             else {
                 print("Document does not exist")
@@ -65,13 +64,25 @@ class testBackend{
         }
         return eventData
     }
-    
+    //converts async function call to regular context
     func getData() -> String{
         Task{
             sampletext = await testData()
         }
+        print("\(sampletext)")
         return sampletext
     }
+    
+    //TODO add functions to add/update data in db
 }
 
+//struct to hold event data
+struct VacationEvent : Codable{
+    @DocumentID var id: String?
+    var Time: Timestamp
+    var Location: String
+    var Description: String
+    var Cotst : Float
+    var EventName: String
+}
 
