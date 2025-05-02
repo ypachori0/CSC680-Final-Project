@@ -41,6 +41,7 @@ struct _80FinalProjectApp: App {
 
 
 class testBackend{
+    var sampletext: String = ""
     
     //function to test pulling data from db.
     func testData() async -> String {
@@ -64,7 +65,7 @@ class testBackend{
     
     func getData(){
         Task{
-            sampletext = await eventData.testData()
+            sampletext = await self.testData()
         }
     }
 }

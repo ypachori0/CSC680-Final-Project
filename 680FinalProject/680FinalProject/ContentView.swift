@@ -10,8 +10,6 @@ import FirebaseCore
 import FirebaseFirestore
 
 struct ContentView: View {
-    
-    @State
     var sampletext: String = ""
     
     var body: some View {
