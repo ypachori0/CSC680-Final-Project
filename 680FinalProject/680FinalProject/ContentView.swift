@@ -74,10 +74,24 @@ struct JoinTripView: View {
 
 // Placeholder view for email sign-in
 struct EmailLoginView: View {
+    @State
+    var email: String = ""
+    
+    @State
+    var password: String = ""
+    
     var body: some View {
         Text("Sign in with Email Page")
             .font(.title)
             .foregroundColor(.gray)
+        TextField("Email: ", text: $email).textFieldStyle(.roundedBorder).padding()
+        TextField("Password: ", text: $password).textFieldStyle(.roundedBorder).padding()
+        Button(action: {
+            print("Button Pressed")
+        }) {
+            Text("Submit")
+        }
+
     }
 }
 

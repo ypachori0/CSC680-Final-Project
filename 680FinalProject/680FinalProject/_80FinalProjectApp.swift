@@ -42,14 +42,6 @@ struct _80FinalProjectApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-            //Text("\(eventData.getData())")
-            TextField("Enter Event Name: ", text: $someText).textFieldStyle(.roundedBorder).padding()
-            Button(action: {
-                print("Button Pressed")
-                eventData.updateTestData()
-            }) {
-                Text("Submit")
-            }
         }
     }
 }
