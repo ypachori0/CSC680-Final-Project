@@ -64,7 +64,36 @@ class testBackend{
         }
         return eventData
     }
-    //converts async function call to regular context
+    
+    //TODO to write data to DB change parameter to accept any number of args
+    func testWriteData() async -> Bool{
+        let db = Firestore.firestore()
+        var eventData: [String: Any] = [:]
+        eventData["Time"] = Timestamp(date: Date())
+        eventData["Location"] = "test location"
+        eventData["Description"] = "test description"
+        eventData["Cost"] = Double.random(in: 0...1000)
+        eventData["EventName"] = "test event"
+        do  {
+            try await db.collection("Event").document("TestEvent").setData(eventData)
+            return true
+        } catch {
+            print("Error writing document to db: \(error)")
+            return false
+        }
+    }
+    // function to call test write from non async context
+    func updateData() -> Void{
+        Task{
+            var successfulWrite = await testWriteData()
+            if(successfulWrite){
+                print("Data successfully written to db")
+            }else {
+                print("Data write failed")
+            }
+        }
+    }
+    //converts async function call to non async context
     func getData() -> String{
         Task{
             sampletext = await testData()
