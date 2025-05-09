@@ -6,26 +6,78 @@
 //
 
 import SwiftUI
-import FirebaseCore
-import FirebaseFirestore
 
 struct ContentView: View {
-    var sampletext: String = ""
-    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-            Text("Second line of text")
+        NavigationView {
+            VStack(spacing: 30) {
+                
+                Spacer()
+
+                // App icon placeholder
+                Image(systemName: "map.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .foregroundColor(.blue)
+                
+                Text("Group Trip Planner")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.black)
+
+                VStack(spacing: 16) {
+                    NavigationLink(destination: JoinTripView()) {
+                        Text("Join with Code")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(LinearGradient(colors: [.blue.opacity(0.6), .cyan], startPoint: .leading, endPoint: .trailing))
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                    }
+                }
+                .padding(.horizontal)
+
+                Spacer()
+
+                NavigationLink(destination: EmailLoginView()) {
+                    Text("Sign in with email")
+                        .font(.subheadline)
+                        .foregroundColor(.cyan)
+                        .underline()
+                }
+
+                Spacer().frame(height: 20)
+            }
+            .padding()
+            .background(
+                LinearGradient(gradient: Gradient(colors: [.white, .blue.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
+            )
+            .ignoresSafeArea()
         }
-        .padding()
-        
     }
 }
-
 
 #Preview {
     ContentView()
 }
+
+// Placeholder view for joining a trip with a code
+struct JoinTripView: View {
+    var body: some View {
+        Text("Join Trip With Code Page")
+            .font(.title)
+            .foregroundColor(.gray)
+    }
+}
+
+// Placeholder view for email sign-in
+struct EmailLoginView: View {
+    var body: some View {
+        Text("Sign in with Email Page")
+            .font(.title)
+            .foregroundColor(.gray)
+    }
+}
+
