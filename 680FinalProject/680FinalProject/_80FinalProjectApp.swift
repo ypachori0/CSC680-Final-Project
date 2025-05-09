@@ -32,10 +32,24 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct _80FinalProjectApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let eventData = testBackend()
+    
+    @State
+    var someText: String = ""
+    
+    @State
+    var balance: Double = 0.0
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-            Text("\(eventData.getData())")
+            //Text("\(eventData.getData())")
+            TextField("Enter Event Name: ", text: $someText).textFieldStyle(.roundedBorder).padding()
+            Button(action: {
+                print("Button Pressed")
+                eventData.updateTestData()
+            }) {
+                Text("Submit")
+            }
         }
     }
 }
@@ -45,7 +59,7 @@ class testBackend{
     var sampletext: String = ""
 
     //async function to test pulling data from db.
-    func testData() async -> String {
+    func testReadData() async -> String {
         let db = Firestore.firestore()
         let docRef: DocumentReference = db.collection("Event").document("TestEvent")
         var eventData = ""
@@ -82,10 +96,28 @@ class testBackend{
             return false
         }
     }
+    //write function that takes an event data struct as argument and returns whether or not it successfully wrote data to the db
+    func writeEventData() async -> Bool{
+        let db = Firestore.firestore()
+        var eventData: [String: Any] = [:]
+        eventData["Time"] = Timestamp(date: Date())
+        eventData["Location"] = "test location"
+        eventData["Description"] = "test description"
+        eventData["Cost"] = Double.random(in: 0...1000)
+        eventData["EventName"] = "test event"
+        do  {
+            try await db.collection("Event").document("TestEvent").setData(eventData)
+            return true
+        } catch {
+            print("Error writing document to db: \(error)")
+            return false
+        }
+    }
+    
     // function to call test write from non async context
-    func updateData() -> Void{
+    func updateTestData() -> Void{
         Task{
-            var successfulWrite = await testWriteData()
+            let successfulWrite = await testWriteData()
             if(successfulWrite){
                 print("Data successfully written to db")
             }else {
@@ -94,9 +126,9 @@ class testBackend{
         }
     }
     //converts async function call to non async context
-    func getData() -> String{
+    func getTestData() -> String{
         Task{
-            sampletext = await testData()
+            sampletext = await testReadData()
         }
         print("\(sampletext)")
         return sampletext
@@ -106,12 +138,12 @@ class testBackend{
 }
 
 //struct to hold event data
-struct VacationEvent : Codable{
-    @DocumentID var id: String?
+public struct EventData : Codable{
+    @DocumentID var EventId: String?
     var Time: Timestamp
     var Location: String
     var Description: String
-    var Cotst : Float
+    var Cost : Float
     var EventName: String
 }
 
