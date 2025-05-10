@@ -18,4 +18,4 @@ Simplifies planning a group trip by organizing itineraries, lodging info, and sh
 ## Nice-to-Have Features  
 - Automatic expense splitting and settlement calculations  
 - MapKit integration to list all planned spots or lodging locations  
-- Real-time chat or announcement board for group members
+
