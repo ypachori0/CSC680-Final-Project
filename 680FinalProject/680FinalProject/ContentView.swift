@@ -41,7 +41,8 @@ struct ContentView: View {
 
                 Spacer()
 
-                NavigationLink(destination: EmailLoginView()) {
+                // Correct NavigationLink to LoginPage
+                NavigationLink(destination: LoginPage()) { // Should be LoginPage(), not LoginView()
                     Text("Sign in with email")
                         .font(.subheadline)
                         .foregroundColor(.cyan)
@@ -71,13 +72,3 @@ struct JoinTripView: View {
             .foregroundColor(.gray)
     }
 }
-
-// Placeholder view for email sign-in
-struct EmailLoginView: View {
-    var body: some View {
-        Text("Sign in with Email Page")
-            .font(.title)
-            .foregroundColor(.gray)
-    }
-}
-

@@ -5,7 +5,6 @@
 //  Created by Michelle Nguyen on 5/9/25.
 //
 
-// HomeView.swift
 
 import SwiftUI
 
@@ -34,21 +33,21 @@ struct HomeView: View {
                             icon: "calendar",
                             title: "Itinerary",
                             description: "View and edit your trip's day-by-day plan.",
-                            destination: Text("Itinerary View Placeholder")
+                            destination: ItineraryView() // Navigate to ItineraryView
                         )
 
                         NavigationCardView(
                             icon: "dollarsign.circle",
                             title: "Expenses",
                             description: "Track and split group expenses.",
-                            destination: Text("Expenses View Placeholder")
+                            destination: ExpensesView() // Navigate to ExpensesView
                         )
 
                         NavigationCardView(
                             icon: "map",
                             title: "Map & Locations",
                             description: "See your trip spots on a map.",
-                            destination: Text("Map View Placeholder")
+                            destination: LocationView() // Navigate to LocationView
                         )
 
                     }
