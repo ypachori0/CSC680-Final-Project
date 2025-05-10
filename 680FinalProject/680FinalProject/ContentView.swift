@@ -81,18 +81,22 @@ struct EmailLoginView: View {
     @State
     var password: String = ""
     
+    let authentification = testAuth()
+    
     var body: some View {
         Text("Sign in with Email Page")
             .font(.title)
             .foregroundColor(.gray)
-        TextField("Email: ", text: $email).textFieldStyle(.roundedBorder).padding()
-        TextField("Password: ", text: $password).textFieldStyle(.roundedBorder).padding()
+        TextField("Email: ", text: $email).textFieldStyle(.roundedBorder).padding().keyboardType(.emailAddress).textContentType(.emailAddress)
+        TextField("Password: ", text: $password).textFieldStyle(.roundedBorder).padding().textContentType(.password)
         Button(action: {
-            print("Button Pressed")
+            authentification.setEmail(email: email)
+            authentification.setPassword(password: password)
+            
+            
         }) {
             Text("Submit")
         }
-
     }
 }
 

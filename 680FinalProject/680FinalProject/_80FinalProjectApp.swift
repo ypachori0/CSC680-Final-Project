@@ -46,6 +46,45 @@ struct _80FinalProjectApp: App {
     }
 }
 
+//test functions to add users.
+class testAuth {
+    private var email: String = ""
+    private var password: String = ""
+    private var userLoginStatus: User.
+    
+    func validateEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        return email.range(of: emailRegex, options: .regularExpression, range: nil, locale: nil) != nil
+    }
+    func checkAuth() -> Bool{
+        print("Attempted to check authentification of email")
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+          guard let strongSelf = self else { return }
+        }
+    }
+    
+    func setEmail(email: String){
+        self.email = email
+    }
+    
+    func setPassword(password: String){
+        self.password = password
+    }
+    
+    //TODO add proper user registration
+    func testAddUser() -> Bool {
+        print("Attempted to add user to database")
+        Auth.auth().createUser(withEmail: "test@test.com", password: "Test!1234") { authResult, error in
+            if let error = error {
+                print("Error adding user: \(error)")
+                return
+            }
+            print("User added successfully")
+        }
+        return true
+    }
+}
+
 @Observable
 class testBackend{
     var sampletext: String = ""
