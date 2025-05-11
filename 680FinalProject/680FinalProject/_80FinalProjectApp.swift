@@ -84,10 +84,23 @@ class testAuth {
         self.password = password
     }
     
-    //TODO add proper user registration
+    //test function
     func testAddUser() -> Bool {
         print("Attempted to add user to database")
         Auth.auth().createUser(withEmail: "test@test.com", password: "Test!1234") { authResult, error in
+            if let error = error {
+                print("Error adding user: \(error)")
+                return
+            }
+            print("User added successfully")
+        }
+        return true
+    }
+    
+    //function to add users
+    func testAddUser(email: String, password:String){
+        print("Attempted to add user to database")
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("Error adding user: \(error)")
                 return
@@ -140,6 +153,7 @@ class testBackend{
             return false
         }
     }
+    
     //write function that takes an event data struct as argument and returns whether or not it successfully wrote data to the db
     func writeEventData() async -> Bool{
         let db = Firestore.firestore()
@@ -169,6 +183,7 @@ class testBackend{
             }
         }
     }
+    
     //converts async function call to non async context
     func getTestData() -> String{
         Task{
@@ -177,8 +192,6 @@ class testBackend{
         print("\(sampletext)")
         return sampletext
     }
-    
-    //TODO add functions to add/update data in db
 }
 
 //struct to hold event data
@@ -189,5 +202,8 @@ public struct EventData : Codable{
     var Description: String
     var Cost : Float
     var EventName: String
+    
+    //need another struct containing an array of users
+    //var AttendedBy: User
 }
 

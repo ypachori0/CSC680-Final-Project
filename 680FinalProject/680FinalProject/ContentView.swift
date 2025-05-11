@@ -83,6 +83,7 @@ struct EmailLoginView: View {
     
     let authentification = testAuth()
     
+    //deprecated
     var body: some View {
         Text("Sign in with Email Page")
             .font(.title)
