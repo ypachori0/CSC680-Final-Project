@@ -6,13 +6,29 @@
 //
 
 import SwiftUI
+import Combine
+
+final class KeyboardResponder: ObservableObject {
+    @Published var currentHeight: CGFloat = 0
+    private var cancellable: AnyCancellable?
+
+    init() {
+        cancellable = Publishers.Merge(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+                .compactMap { ($0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height },
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in CGFloat(0) }
+        )
+        .subscribe(on: RunLoop.main)
+        .assign(to: \.currentHeight, on: self)
+    }
+}
 
 struct LoginPage: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isRegistering: Bool = false
-    
-    let authentification = testAuth()
+    @StateObject private var keyboard = KeyboardResponder()
 
     var body: some View {
         NavigationView {
@@ -59,12 +75,12 @@ struct LoginPage: View {
 
                 Spacer()
             }
-            .padding()
+            .padding(.bottom, keyboard.currentHeight)
+            .animation(.easeOut(duration: 0.25), value: keyboard.currentHeight)
         }
     }
 
     // Handle submit action for both login and registration
-    // call auth function here to determine whether person is signing in or not
     private func handleSubmit() {
         if isRegistering {
             // Register user logic (Placeholder)
@@ -72,13 +88,6 @@ struct LoginPage: View {
         } else {
             // Sign In logic (Placeholder)
             print("Signing in with \(email)")
-            authentification.setEmail(email: email)
-            authentification.setPassword(password: password)
-            if(authentification.checkAuth()){
-                print("Succesful login")
-            }
-            
-            
         }
     }
 }
