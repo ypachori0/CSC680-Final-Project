@@ -7,7 +7,6 @@
 
 import Foundation
 import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 struct Expense: Codable, Identifiable {
     @DocumentID var id: String? = UUID().uuidString
