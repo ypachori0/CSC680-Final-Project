@@ -50,8 +50,12 @@ struct _80FinalProjectApp: App {
 class testAuth {
     private var email: String = ""
     private var password: String = ""
-    private var userLoginStatus: User.
     
+    var user = Auth.auth().currentUser
+    
+    var successfulLogin: Bool = false
+    
+    //function to validate email using given regex pattern
     func validateEmail(_ email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         return email.range(of: emailRegex, options: .regularExpression, range: nil, locale: nil) != nil
@@ -60,7 +64,16 @@ class testAuth {
         print("Attempted to check authentification of email")
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
+            if let error = error {
+                print("Error signing in: \(error)")
+                return
+            } else{
+                self?.user = authResult?.user ?? strongSelf.user
+                print("Signed in successfully")
+                self?.successfulLogin = true
+            }
         }
+        return successfulLogin
     }
     
     func setEmail(email: String){

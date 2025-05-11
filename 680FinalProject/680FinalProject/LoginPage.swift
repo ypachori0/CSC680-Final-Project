@@ -11,6 +11,8 @@ struct LoginPage: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isRegistering: Bool = false
+    
+    let authentification = testAuth()
 
     var body: some View {
         NavigationView {
@@ -62,6 +64,7 @@ struct LoginPage: View {
     }
 
     // Handle submit action for both login and registration
+    // call auth function here to determine whether person is signing in or not
     private func handleSubmit() {
         if isRegistering {
             // Register user logic (Placeholder)
@@ -69,6 +72,13 @@ struct LoginPage: View {
         } else {
             // Sign In logic (Placeholder)
             print("Signing in with \(email)")
+            authentification.setEmail(email: email)
+            authentification.setPassword(password: password)
+            if(authentification.checkAuth()){
+                print("Succesful login")
+            }
+            
+            
         }
     }
 }

@@ -76,10 +76,10 @@ struct JoinTripView: View {
 // Placeholder view for email sign-in
 struct EmailLoginView: View {
     @State
-    var email: String = ""
+    private var email: String = ""
     
     @State
-    var password: String = ""
+    private var password: String = ""
     
     let authentification = testAuth()
     
@@ -87,12 +87,15 @@ struct EmailLoginView: View {
         Text("Sign in with Email Page")
             .font(.title)
             .foregroundColor(.gray)
-        TextField("Email: ", text: $email).textFieldStyle(.roundedBorder).padding().keyboardType(.emailAddress).textContentType(.emailAddress)
-        TextField("Password: ", text: $password).textFieldStyle(.roundedBorder).padding().textContentType(.password)
+        TextField("Email: ", text: $email).textFieldStyle(.roundedBorder).padding().keyboardType(.emailAddress).textContentType(.emailAddress).autocorrectionDisabled()
+        TextField("Password: ", text: $password).textFieldStyle(.roundedBorder).padding().textContentType(.password).autocorrectionDisabled()
         Button(action: {
+            print("\(email) \(password)")
             authentification.setEmail(email: email)
             authentification.setPassword(password: password)
-            
+            if(authentification.checkAuth()){
+                print("Succesful login")
+            }
             
         }) {
             Text("Submit")
