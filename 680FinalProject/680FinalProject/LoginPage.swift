@@ -29,6 +29,8 @@ struct LoginPage: View {
     @State private var password: String = ""
     @State private var isRegistering: Bool = false
     @StateObject private var keyboard = KeyboardResponder()
+    
+    let authentification = testAuth()
 
     var body: some View {
         NavigationView {
@@ -85,9 +87,15 @@ struct LoginPage: View {
         if isRegistering {
             // Register user logic (Placeholder)
             print("Registering account for \(email)")
+
         } else {
             // Sign In logic (Placeholder)
             print("Signing in with \(email)")
+            authentification.setEmail(email: email)
+            authentification.setPassword(password: password)
+            if(authentification.checkAuth()){
+                print("Succesful login")
+            }
         }
     }
 }
