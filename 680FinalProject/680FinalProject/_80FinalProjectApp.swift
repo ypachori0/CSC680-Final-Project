@@ -98,7 +98,7 @@ class testAuth {
     }
     
     //function to add users
-    func testAddUser(email: String, password:String) -> Bool{
+    func addUser(email: String, password:String) -> Bool{
         print("Attempted to add user to database")
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
