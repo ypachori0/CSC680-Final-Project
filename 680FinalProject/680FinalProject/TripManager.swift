@@ -2,7 +2,7 @@
 //  TripManager.swift
 //  680FinalProject
 //
-//  Created by Majd Al-Najjar
+//  Created by Majd Alnajjar
 //
 
 import Foundation
