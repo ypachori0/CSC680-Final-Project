@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct DashboardView: View {
     var body: some View {
         NavigationView {
             ScrollView {
@@ -67,7 +67,6 @@ struct HomeView: View {
     }
 }
 
-// 👇 Define the card view right below HomeView so it's in scope
 struct NavigationCardView<Destination: View>: View {
     var icon: String
     var title: String
@@ -107,5 +106,5 @@ struct NavigationCardView<Destination: View>: View {
 }
 
 #Preview {
-    HomeView()
+    DashboardView()
 }
