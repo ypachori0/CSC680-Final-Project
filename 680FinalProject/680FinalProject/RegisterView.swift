@@ -26,7 +26,7 @@ struct RegisterView: View {
                     .padding(.top)
 
                 // Email input
-                TextField("Email", text: $email)
+                TextField("Email", text: $email)    
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
 

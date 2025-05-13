@@ -54,6 +54,7 @@ struct LoginPage: View {
                 // Submit Button
                 Button(action: {
                     handleSubmit()
+                    //after logging in this should then move to the next page and make user ID 
                 }) {
                     Text(isRegistering ? "Register" : "Sign In")
                         .frame(maxWidth: .infinity)

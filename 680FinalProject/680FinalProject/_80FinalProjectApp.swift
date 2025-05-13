@@ -46,12 +46,12 @@ struct _80FinalProjectApp: App {
     }
 }
 
-//test functions to add users.
+//class that handles authentication
 class testAuth {
     private var email: String = ""
     private var password: String = ""
     
-    var user = Auth.auth().currentUser
+    private var user = Auth.auth().currentUser
     
     var successfulLogin: Bool = false
     
