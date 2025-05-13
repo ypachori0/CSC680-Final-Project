@@ -35,7 +35,7 @@ struct ItineraryView: View {
             }
             .padding()
         }
-        .navigationBarTitle("Itinerary", displayMode: .inline)
+        // Removed redundant navigation bar title to avoid stacking headers
     }
 }
 
@@ -110,7 +110,3 @@ struct EventCardView: View {
 #Preview {
     ItineraryView()
 }
-
-
-
-
