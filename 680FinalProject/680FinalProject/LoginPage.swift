@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 final class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0
@@ -28,12 +27,13 @@ struct LoginPage: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isRegistering: Bool = false
-    @StateObject private var keyboard = KeyboardResponder()
+    @State private var navigateToDashboard = false  // State to trigger navigation
     
+    @StateObject private var keyboard = KeyboardResponder()
     let authentification = testAuth()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 // Title
                 Text(isRegistering ? "Create an Account" : "Sign In")
@@ -76,6 +76,11 @@ struct LoginPage: View {
                 )
 
                 Spacer()
+                
+                // Programmatic navigation to DashboardView using navigationDestination
+                .navigationDestination(isPresented: $navigateToDashboard) {
+                    DashboardView()  // Navigate to the DashboardView on successful login
+                }
             }
             .padding(.bottom, keyboard.currentHeight)
             .animation(.easeOut(duration: 0.25), value: keyboard.currentHeight)
@@ -93,8 +98,9 @@ struct LoginPage: View {
             print("Signing in with \(email)")
             authentification.setEmail(email: email)
             authentification.setPassword(password: password)
-            if(authentification.checkAuth()){
-                print("Succesful login")
+            if authentification.checkAuth() {
+                print("Successful login")
+                navigateToDashboard = true // Trigger navigation to DashboardView
             }
         }
     }

@@ -12,13 +12,13 @@ struct ItineraryView: View {
     @State private var itinerary: [ItineraryDay] = sampleItinerary
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Your Trip Itinerary")
-                .font(.largeTitle)
-                .bold()
-                .padding(.top)
+        ScrollView {  // Wrap the entire content in ScrollView
+            VStack(alignment: .leading) {
+                Text("Your Trip Itinerary")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top)
 
-            ScrollView {
                 ForEach(itinerary) { day in
                     VStack(alignment: .leading, spacing: 10) {
                         Text(day.dateFormatted)
@@ -33,8 +33,8 @@ struct ItineraryView: View {
                     .padding(.bottom, 20)
                 }
             }
+            .padding()
         }
-        .padding()
         .navigationBarTitle("Itinerary", displayMode: .inline)
     }
 }
@@ -110,6 +110,7 @@ struct EventCardView: View {
 #Preview {
     ItineraryView()
 }
+
 
 
 

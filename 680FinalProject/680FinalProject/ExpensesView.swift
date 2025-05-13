@@ -19,54 +19,54 @@ struct ExpensesView: View {
     @State private var amountOwed: Double = 85.25
 
     var body: some View {
-        VStack(spacing: 20) {
-            // Header with total and owed amount
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Total Expenses")
-                    .font(.title)
-                    .fontWeight(.bold)
-                
-                Text("$\(totalExpenses, specifier: "%.2f")")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.green)
-                
-                Text("You Owe")
-                    .font(.headline)
-                
-                Text("$\(amountOwed, specifier: "%.2f")")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.blue)
-            }
-            .padding(.top)
+        ScrollView {  // Wrap the entire content in ScrollView
+            VStack(spacing: 20) {
+                // Header with total and owed amount
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Total Expenses")
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    Text("$\(totalExpenses, specifier: "%.2f")")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.green)
+                    
+                    Text("You Owe")
+                        .font(.headline)
+                    
+                    Text("$\(amountOwed, specifier: "%.2f")")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.blue)
+                }
+                .padding(.top)
 
-            // List of expenses
-            ScrollView {
+                // List of expenses
                 ForEach(expenses, id: \.id) { expense in
                     ExpenseRow(expense: expense)
                         .padding(.bottom, 10)
                         .background(NavigationLink("", destination: SettlePaymentView(expenseID: expense.id)))  // Link to settle payment page
                 }
+
+                // Add expense button
+                Button(action: {
+                    addNewExpense()
+                }) {
+                    Text("+ Add Expense")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.blue)
+                }
+                .padding(.bottom)
             }
             .padding()
-
-            // Add expense button
-            Button(action: {
-                addNewExpense()
-            }) {
-                Text("+ Add Expense")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.blue)
-            }
-            .padding(.bottom)
+            .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.white]), startPoint: .top, endPoint: .bottom))
+            .cornerRadius(20)
+            .shadow(radius: 10)
+            .frame(maxWidth: .infinity)
         }
-        .padding()
-        .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.white]), startPoint: .top, endPoint: .bottom))
-        .cornerRadius(20)
-        .shadow(radius: 10)
-        .frame(maxWidth: .infinity)
+        .frame(maxHeight: .infinity) // Ensure the scroll view takes up the whole screen
     }
 
     // Function to simulate adding a new expense
@@ -118,6 +118,7 @@ struct Expense: Identifiable {
     var amount: Double
     var people: [String]
 }
+
 
 #Preview {
     ExpensesView()

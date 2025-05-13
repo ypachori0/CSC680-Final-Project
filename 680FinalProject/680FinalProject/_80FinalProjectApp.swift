@@ -41,7 +41,7 @@ struct _80FinalProjectApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }

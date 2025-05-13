@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
@@ -61,7 +61,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MainView()
 }
 
 // Placeholder view for joining a trip with a code
