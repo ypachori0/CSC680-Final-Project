@@ -104,7 +104,7 @@ struct LoginPage: View {
                 self.navigateToDashboard = true
             }
             else{
-                
+                print("Login Timeout try again.")
             }
         }
     }

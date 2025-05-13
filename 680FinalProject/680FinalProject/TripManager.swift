@@ -2,16 +2,9 @@
 //  TripManager.swift
 //  680FinalProject
 //
-//  Created by Thomas Bercasio on 5/12/25.
-//
-
-
-//
-//  TripManager.swift
-//  680FinalProject
-//
-//  Created by Majd Alnajjar
-//
+//  Created by Thomas Bercasio
+//  And Majd Alnajjar
+//  On 5/12/2025
 
 import Foundation
 import FirebaseFirestore
@@ -78,7 +71,7 @@ class TripManager {
     // Get all expense receipts for a specific user
     func getUserExpenseData(userID: String) async -> [[String: Any]] {
         var expenses: [[String: Any]] = []
-        let receiptsRef = db.collection("Expenses").document(userID).collection("Receipts")
+        let receiptsRef = db.collection("Expenses").document(userID).collection("Bills")
 
         do {
             let snapshot = try await receiptsRef.getDocuments()

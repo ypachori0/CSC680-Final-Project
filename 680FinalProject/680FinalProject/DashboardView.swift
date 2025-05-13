@@ -9,7 +9,15 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @Binding var authentification: testAuth
+    @Binding var dashAuth: testAuth
+    
+    @State var tripService: TripManager // will be used as a binding variable in other subviews
+    
+    init (authentification: Binding<testAuth>){
+        self.tripService = TripManager()
+        self._dashAuth = authentification
+    }
+    
     var body: some View {
             ScrollView {
                 VStack(spacing: 30) {
@@ -20,14 +28,6 @@ struct DashboardView: View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
-                        
-                        /*
-                        Text("\(authentification.getCurrentUserData()?.user.uid)")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                        */
-
                         Text("Trip Dashboard")
                             .font(.title3)
                             .foregroundColor(.gray)
@@ -47,7 +47,7 @@ struct DashboardView: View {
                             icon: "dollarsign.circle",
                             title: "Expenses",
                             description: "Track and split group expenses.",
-                            destination: ExpensesView() // Navigate to ExpensesView
+                            destination: ExpensesView(authentication: $dashAuth) // Navigate to ExpensesView
                         )
 
                         NavigationCardView(
@@ -56,6 +56,12 @@ struct DashboardView: View {
                             description: "See your trip spots on a map.",
                             destination: LocationView() // Navigate to LocationView
                         )
+                        Button(action: {
+                            populateDatabaseWithExpenses()
+                            //after logging in this should then move to the next page and make user ID
+                        }) {
+                            Text("It is 3am and I need this to work")
+                        }
 
                     }
 
@@ -71,6 +77,14 @@ struct DashboardView: View {
                     .ignoresSafeArea()
             )
         }
+    func populateDatabaseWithExpenses() {
+        let currentUserID = dashAuth.getCurrentUserData()?.user.uid
+        let dbAccess = testBackend()
+        print(currentUserID)
+        Task{
+            let success = await dbAccess.writeExpenseData(UserID: currentUserID!)
+        }
+    }
 }
 
 struct NavigationCardView<Destination: View>: View {

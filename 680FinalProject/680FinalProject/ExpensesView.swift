@@ -19,13 +19,26 @@ struct ExpensesView: View {
     // Total expenses and amount owed as @State so they update dynamically
     @State private var totalExpenses: Double = 240.75
     @State private var amountOwed: Double = 85.25
+    
+    @Binding private var expenseAuth: testAuth
+    
+    let tripService = TripManager()
+    
+    @State private var currentUID: String = ""
+    
+    init (authentication: Binding<testAuth>){
+        self._expenseAuth = authentication //passed auth data from dash
+        expenses = []
+        currentUID = authentication.wrappedValue.getCurrentUserData()!.user.uid
+        
+    }
 
     var body: some View {
         ScrollView {  // Wrap the entire content in ScrollView
             VStack(spacing: 20) {
                 // Header with total and owed amount
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Total Expenses")
+                    Text("Total Expenses \(expenseAuth.getCurrentUserData()?.user.uid)")
                         .font(.title)
                         .fontWeight(.bold)
                     
@@ -120,8 +133,4 @@ struct Expense: Identifiable {
     var name: String
     var amount: Double
     var people: [String]
-}
-
-#Preview {
-    ExpensesView()
 }

@@ -189,6 +189,23 @@ class testBackend{
         }
     }
     
+    func writeExpenseData (UserID: String) async -> Bool{
+        let db = Firestore.firestore()
+        var expenseData: [String: Any] = [:]
+        expenseData["Time"] = Timestamp(date: Date())
+        expenseData["Description"] = "test description"
+        expenseData["Amount"] = Double.random(in: 0...1000)
+        do  {
+            let randomInt: Int = Int.random(in: 1...20)
+            try await db.collection("Expense").document(UserID).collection("Bills").document("3am Silicon Valley Coding Session \(randomInt)").setData(expenseData)
+            print("Successfully wrote data to server")
+            return true
+        } catch {
+            print("Error writing document to db: \(error)")
+            return false
+        }
+    }
+    
     // function to call test write from non async context
     func updateTestData() -> Void{
         Task{
