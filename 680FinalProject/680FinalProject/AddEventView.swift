@@ -3,17 +3,25 @@
 //  680FinalProject
 //
 //  Created by Michelle Nguyen on 5/12/25.
+//  And Majd Alnajjar on 5/13/25
 //
 
 import SwiftUI
 
 struct AddEventView: View {
+    @Binding var auth: testAuth
+
     @State private var eventName: String = ""
     @State private var eventLocation: String = ""
     @State private var eventDescription: String = ""
     @State private var eventDate: Date = Date()
     @State private var totalCost: String = ""
     @State private var attendees: String = ""
+
+    @State private var successMessage: String?
+    @State private var errorMessage: String?
+
+    let tripService = TripManager()
 
     var body: some View {
         VStack(spacing: 20) {
@@ -104,8 +112,7 @@ struct AddEventView: View {
 
             // Add Event Button
             Button(action: {
-                // Handle adding the event logic here
-                addEvent()
+                Task { await addEvent() }
             }) {
                 Text("Add Event")
                     .font(.title2)
@@ -117,6 +124,16 @@ struct AddEventView: View {
             }
             .padding(.top)
 
+            // Feedback Messages
+            if let success = successMessage {
+                Text(success)
+                    .foregroundColor(.green)
+            }
+            if let error = errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+            }
+
             Spacer()
         }
         .padding()
@@ -125,18 +142,47 @@ struct AddEventView: View {
         .shadow(radius: 10)
     }
 
-    // Add event logic (simplified for now)
-    private func addEvent() {
-        // Add your logic here for saving the event
-        if let cost = Double(totalCost), !attendees.isEmpty {
-            let attendeeList = attendees.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-            print("Event: \(eventName), Cost: \(cost), Attendees: \(attendeeList)")
+    // Add event and write to Firestore
+    private func addEvent() async {
+        guard let cost = Double(totalCost),
+              !eventName.isEmpty,
+              !eventLocation.isEmpty,
+              !eventDescription.isEmpty,
+              !attendees.isEmpty else {
+            errorMessage = "Please fill out all fields correctly."
+            return
+        }
+
+        let attendeeList = attendees
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+        let success = await tripService.createEvent(
+            eventName: eventName,
+            location: eventLocation,
+            description: eventDescription,
+            cost: cost,
+            attendees: attendeeList
+        )
+
+        if success {
+            successMessage = "Event added successfully!"
+            errorMessage = nil
+
+            // Note: if you want to use the real eventID from Firestore, you'll need to modify TripManager to return it
+            await tripService.costSplit(
+                eventID: UUID().uuidString, // Temporary ID; replace with real Firestore event ID if needed
+                cost: cost,
+                attendees: attendeeList,
+                eventName: eventName
+            )
         } else {
-            print("Please fill out all fields correctly!")
+            errorMessage = "Failed to add event."
+            successMessage = nil
         }
     }
 }
 
 #Preview {
-    AddEventView()
+    AddEventView(auth: .constant(testAuth()))
 }
