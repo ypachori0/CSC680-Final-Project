@@ -9,74 +9,131 @@ import SwiftUI
 
 struct AddEventView: View {
     @State private var eventName: String = ""
+    @State private var eventLocation: String = ""
     @State private var eventDescription: String = ""
     @State private var eventDate: Date = Date()
-    
-    // Placeholder for a database or API call
-    @State private var isEventSaved: Bool = false
-    @State private var showConfirmationMessage: Bool = false
+    @State private var totalCost: String = ""
+    @State private var attendees: String = ""
 
     var body: some View {
-        NavigationView {
-            VStack {
-                // Event Name
-                TextField("Event Name", text: $eventName)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
-                    .padding(.top)
-
-                // Event Description
-                TextField("Event Description", text: $eventDescription)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
-                    .padding(.top)
-
-                // Event Date Picker
-                DatePicker("Event Date", selection: $eventDate, displayedComponents: [.date, .hourAndMinute])
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                    .padding(.top)
-
-                // Save Button
-                Button(action: saveEvent) {
-                    Text("Save Event")
-                        .font(.title2)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
+        VStack(spacing: 20) {
+            // Title Header
+            Text("Create a New Event")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
                 .padding(.top)
+                .foregroundColor(.primary)
 
-                // Confirmation Message
-                if showConfirmationMessage {
-                    Text(isEventSaved ? "Event successfully saved!" : "Failed to save event.")
-                        .foregroundColor(isEventSaved ? .green : .red)
-                        .padding(.top)
-                }
-                
-                Spacer()
+            // Event Name
+            VStack(alignment: .leading) {
+                Text("Event Name")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+
+                TextField("Enter event name", text: $eventName)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                    .padding(.top, 5)
             }
-            .padding()
-            .navigationBarTitle("Add New Event")
-        }
-    }
-    
-    // Simulate saving the event (DATABASE STUFF HERE)
-    private func saveEvent() {
 
-        
-        if !eventName.isEmpty && !eventDescription.isEmpty {
-            // Simulate a successful save
-            isEventSaved = true
-        } else {
-            // Simulate a failure
-            isEventSaved = false
+            // Event Location
+            VStack(alignment: .leading) {
+                Text("Location")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+
+                TextField("Enter location", text: $eventLocation)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                    .padding(.top, 5)
+            }
+
+            // Event Description
+            VStack(alignment: .leading) {
+                Text("Description")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+
+                TextField("Enter description", text: $eventDescription)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                    .padding(.top, 5)
+            }
+
+            // Event Date Picker
+            VStack(alignment: .leading) {
+                Text("Event Date")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+
+                DatePicker("Select date", selection: $eventDate, displayedComponents: [.date, .hourAndMinute])
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+            }
+
+            // Total Cost
+            VStack(alignment: .leading) {
+                Text("Total Cost")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+
+                TextField("Enter total cost", text: $totalCost)
+                    .padding()
+                    .keyboardType(.decimalPad)
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                    .padding(.top, 5)
+            }
+
+            // Attendees
+            VStack(alignment: .leading) {
+                Text("Attendees (comma separated)")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+
+                TextField("Enter attendee names", text: $attendees)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+                    .padding(.top, 5)
+            }
+
+            // Add Event Button
+            Button(action: {
+                // Handle adding the event logic here
+                addEvent()
+            }) {
+                Text("Add Event")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
+            .padding(.top)
+
+            Spacer()
         }
-        
-        // Show confirmation message
-        showConfirmationMessage = true
+        .padding()
+        .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.white]), startPoint: .top, endPoint: .bottom))
+        .cornerRadius(20)
+        .shadow(radius: 10)
+    }
+
+    // Add event logic (simplified for now)
+    private func addEvent() {
+        // Add your logic here for saving the event
+        if let cost = Double(totalCost), !attendees.isEmpty {
+            let attendeeList = attendees.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+            print("Event: \(eventName), Cost: \(cost), Attendees: \(attendeeList)")
+        } else {
+            print("Please fill out all fields correctly!")
+        }
     }
 }
 

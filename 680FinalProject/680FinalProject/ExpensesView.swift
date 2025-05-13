@@ -46,13 +46,13 @@ struct ExpensesView: View {
                 ForEach(expenses, id: \.id) { expense in
                     ExpenseRow(expense: expense)
                         .padding(.bottom, 10)
+                        .background(NavigationLink("", destination: SettlePaymentView(expenseID: expense.id)))  // Link to settle payment page
                 }
             }
             .padding()
 
             // Add expense button
             Button(action: {
-                // Placeholder for adding expense action
                 addNewExpense()
             }) {
                 Text("+ Add Expense")
@@ -63,7 +63,7 @@ struct ExpensesView: View {
             .padding(.bottom)
         }
         .padding()
-        // Removed the background modifier here
+        .background(LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.white]), startPoint: .top, endPoint: .bottom))
         .cornerRadius(20)
         .shadow(radius: 10)
         .frame(maxWidth: .infinity)
@@ -106,7 +106,7 @@ struct ExpenseRow: View {
             }
         }
         .padding()
-        .background(Color.white) // White background for each row
+        .background(Color.white)
         .cornerRadius(10)
         .shadow(radius: 5)
     }
