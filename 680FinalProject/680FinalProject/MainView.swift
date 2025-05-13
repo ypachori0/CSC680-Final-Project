@@ -11,7 +11,7 @@ struct MainView: View {
     @State private var loginShown = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 30) {
                 
                 Spacer()

@@ -79,8 +79,10 @@ struct LoginPage: View {
             )
             
             // MARK: - Navigation Links
-            NavigationLink(destination: DashboardView(), isActive: $navigateToDashboard){
-                EmptyView()
+            NavigationLink(value:"Go to dashboard"){
+                Text("Loading Dashboard")
+            }.navigationDestination(isPresented: $navigateToDashboard){
+                DashboardView()
             }
             Spacer()
         }
@@ -101,7 +103,7 @@ struct LoginPage: View {
                 self.navigateToDashboard = true
             }
             else{
-                print("Login Timeout")
+                
             }
         }
     }

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Foundation
+import CoreData
 
 // firebase dependencies
 import FirebaseCore
