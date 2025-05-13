@@ -46,9 +46,10 @@ struct ExpensesView: View {
 
                 // List of expenses
                 ForEach(expenses, id: \.id) { expense in
-                    ExpenseRow(expense: expense)
-                        .padding(.bottom, 10)
-                        .background(NavigationLink("", destination: SettlePaymentView(expenseID: expense.id)))  // Link to settle payment page
+                    NavigationLink(destination: SettlePaymentView(expenseID: expense.id)) {
+                        ExpenseRow(expense: expense)
+                            .padding(.bottom, 10)
+                    }
                 }
 
                 // Add expense button
@@ -120,7 +121,6 @@ struct Expense: Identifiable {
     var amount: Double
     var people: [String]
 }
-
 
 #Preview {
     ExpensesView()
