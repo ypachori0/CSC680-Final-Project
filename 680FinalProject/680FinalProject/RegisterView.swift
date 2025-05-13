@@ -17,7 +17,6 @@ struct RegisterView: View {
     @State private var navigateToHomeView = false
 
     var body: some View {
-        NavigationStack {
             VStack(spacing: 20) {
                 // Title
                 Text("Create an Account")
@@ -26,7 +25,7 @@ struct RegisterView: View {
                     .padding(.top)
 
                 // Email input
-                TextField("Email", text: $email)
+                TextField("Email", text: $email)    
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
 
@@ -65,7 +64,6 @@ struct RegisterView: View {
             .alert(isPresented: $registrationSuccess) {
                 Alert(title: Text("Success"), message: Text("Account successfully registered!"), dismissButton: .default(Text("OK")))
             }
-        }
     }
 
     // Handle registration logic

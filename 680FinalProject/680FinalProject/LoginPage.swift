@@ -31,9 +31,12 @@ struct LoginPage: View {
     
     @StateObject private var keyboard = KeyboardResponder()
     let authentification = testAuth()
-
+    
     var body: some View {
+<<<<<<< HEAD
         NavigationStack {
+=======
+>>>>>>> d254e335fdbcf26dd756eec11dfca49146f7e217
             VStack(spacing: 20) {
                 // Title
                 Text(isRegistering ? "Create an Account" : "Sign In")
@@ -54,6 +57,7 @@ struct LoginPage: View {
                 // Submit Button
                 Button(action: {
                     handleSubmit()
+                    //after logging in this should then move to the next page and make user ID 
                 }) {
                     Text(isRegistering ? "Register" : "Sign In")
                         .frame(maxWidth: .infinity)
@@ -84,7 +88,6 @@ struct LoginPage: View {
             }
             .padding(.bottom, keyboard.currentHeight)
             .animation(.easeOut(duration: 0.25), value: keyboard.currentHeight)
-        }
     }
 
     // Handle submit action for both login and registration

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ExpensesView: View {
+    
+    //populate this array with objects from the database
     @State private var expenses: [Expense] = [
         Expense(name: "Breakfast", amount: 45.00, people: ["Payd", "Yash", "Michelle", "Thomas"]),
         Expense(name: "Shared Ride", amount: 60.75, people: ["Majd", "Michelle", "Thomas", "You"]),
