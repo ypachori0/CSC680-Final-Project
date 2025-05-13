@@ -54,11 +54,6 @@ struct RegisterView: View {
                 .padding(.horizontal)
 
                 Spacer()
-                
-                // Programmatic navigation to HomeView using navigationDestination
-                .navigationDestination(isPresented: $navigateToHomeView) {
-                    DashboardView()
-                }
             }
             .padding()
             .alert(isPresented: $registrationSuccess) {

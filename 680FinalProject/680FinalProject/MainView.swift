@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var loginShown = false
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
@@ -48,7 +50,7 @@ struct MainView: View {
                         .foregroundColor(.cyan)
                         .underline()
                 }
-
+                
                 Spacer().frame(height: 20)
             }
             .padding()

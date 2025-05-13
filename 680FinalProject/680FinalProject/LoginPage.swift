@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Foundation
+import Combine
 
 final class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0
@@ -33,10 +35,6 @@ struct LoginPage: View {
     let authentification = testAuth()
     
     var body: some View {
-<<<<<<< HEAD
-        NavigationStack {
-=======
->>>>>>> d254e335fdbcf26dd756eec11dfca49146f7e217
             VStack(spacing: 20) {
                 // Title
                 Text(isRegistering ? "Create an Account" : "Sign In")
@@ -56,8 +54,13 @@ struct LoginPage: View {
 
                 // Submit Button
                 Button(action: {
-                    handleSubmit()
-                    //after logging in this should then move to the next page and make user ID 
+                    var succesfuLogin = handleSubmit()
+                    //after logging in this should then move to the next page and make user ID
+                    if succesfuLogin {
+                        
+                    } else {
+                        Alert(title: Text("Login Failed"), message: Text("Incorrect e-mail or password"), dismissButton: .default(<#T##label: Text##Text#>"OK"))
+                    }
                 }) {
                     Text(isRegistering ? "Register" : "Sign In")
                         .frame(maxWidth: .infinity)
@@ -80,31 +83,20 @@ struct LoginPage: View {
                 )
 
                 Spacer()
-                
-                // Programmatic navigation to DashboardView using navigationDestination
-                .navigationDestination(isPresented: $navigateToDashboard) {
-                    DashboardView()  // Navigate to the DashboardView on successful login
-                }
             }
             .padding(.bottom, keyboard.currentHeight)
             .animation(.easeOut(duration: 0.25), value: keyboard.currentHeight)
     }
 
     // Handle submit action for both login and registration
-    private func handleSubmit() {
-        if isRegistering {
-            // Register user logic (Placeholder)
-            print("Registering account for \(email)")
-
-        } else {
-            // Sign In logic (Placeholder)
-            print("Signing in with \(email)")
-            authentification.setEmail(email: email)
-            authentification.setPassword(password: password)
-            if authentification.checkAuth() {
-                print("Successful login")
-                navigateToDashboard = true // Trigger navigation to DashboardView
-            }
+    private func handleSubmit() -> Bool {
+        // Sign In logic (Placeholder)
+        print("Signing in with \(email)")
+        authentification.setEmail(email: email)
+        authentification.setPassword(password: password)
+        if authentification.checkAuth() {
+            print("Successful login")
+            navigateToDashboard = true // Trigger navigation to DashboardView
         }
     }
 }
