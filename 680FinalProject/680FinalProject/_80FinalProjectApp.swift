@@ -126,6 +126,21 @@ class testAuth {
         }
         return true
     }
+    func signOutCurrentUser() -> Bool{
+        email = ""
+        password = ""
+        do {
+            print("Attempting signout")
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            //if fails to signout return false
+            print("Error signing out: %@", signOutError)
+            return false
+        }
+        successfulLogin = false
+        currentUserData = nil
+        return true
+    }
 }
 
 @Observable

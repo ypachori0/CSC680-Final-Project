@@ -11,6 +11,8 @@ import SwiftUI
 struct DashboardView: View {
     @Binding var dashAuth: testAuth
     
+    @State private var returnToLogin: Bool = false
+    
     @State var tripService: TripManager // will be used as a binding variable in other subviews
     
     init (authentification: Binding<testAuth>){
@@ -56,16 +58,17 @@ struct DashboardView: View {
                             description: "See your trip spots on a map.",
                             destination: LocationView() // Navigate to LocationView
                         )
-                        /*
+                        Spacer()
                         Button(action: {
-                            populateDatabaseWithExpenses()
                             //after logging in this should then move to the next page and make user ID
+                            returnToLogin = dashAuth.signOutCurrentUser()
                         }) {
-                            Text("It is 3am and I need this to work")
+                            Text("Sign Out")
                         }
-                        */
                     }
-
+                    .navigationDestination(isPresented: $returnToLogin){
+                        LoginPage()
+                    }
                     Spacer()
                 }
                 .padding()
@@ -83,7 +86,7 @@ struct DashboardView: View {
         let dbAccess = testBackend()
         print(currentUserID)
         Task{
-            let success = await dbAccess.writeExpenseData(UserID: currentUserID!)
+            let _ = await dbAccess.writeExpenseData(UserID: currentUserID!)
         }
     }
 }
