@@ -80,9 +80,7 @@ struct LoginPage: View {
             )
             
             // MARK: - Navigation Links
-            NavigationLink(value:"Go to dashboard"){
-                Text("Loading Dashboard")
-            }.navigationDestination(isPresented: $navigateToDashboard){
+            .navigationDestination(isPresented: $navigateToDashboard){
                 DashboardView(authentification: $authentification)
             }
             Spacer()

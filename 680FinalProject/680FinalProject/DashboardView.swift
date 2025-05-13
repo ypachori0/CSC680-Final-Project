@@ -56,13 +56,14 @@ struct DashboardView: View {
                             description: "See your trip spots on a map.",
                             destination: LocationView() // Navigate to LocationView
                         )
+                        /*
                         Button(action: {
                             populateDatabaseWithExpenses()
                             //after logging in this should then move to the next page and make user ID
                         }) {
                             Text("It is 3am and I need this to work")
                         }
-
+                        */
                     }
 
                     Spacer()

@@ -15,6 +15,8 @@ struct RegisterView: View {
     
     // Navigation destination
     @State private var navigateToHomeView = false
+    
+    let userAccountCreation = testAuth()
 
     var body: some View {
             VStack(spacing: 20) {
@@ -52,7 +54,12 @@ struct RegisterView: View {
                         .font(.title2)
                 }
                 .padding(.horizontal)
-
+                
+                NavigationLink(value:"Go to home"){
+                    Text("Loading Dashboard")
+                }.navigationDestination(isPresented: $navigateToHomeView){
+                    LoginPage()                }
+                
                 Spacer()
             }
             .padding()
@@ -66,6 +73,7 @@ struct RegisterView: View {
         if password == confirmPassword {
             // Registration logic (Placeholder)
             print("Registering account for \(email)")
+            userAccountCreation.addUser(email: email, password: password)
             registrationSuccess = true
             navigateToHomeView = true // Trigger navigation to HomeView
         } else {
