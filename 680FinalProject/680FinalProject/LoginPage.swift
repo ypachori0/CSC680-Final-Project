@@ -31,9 +31,8 @@ struct LoginPage: View {
     @StateObject private var keyboard = KeyboardResponder()
     
     let authentification = testAuth()
-
+    
     var body: some View {
-        NavigationView {
             VStack(spacing: 20) {
                 // Title
                 Text(isRegistering ? "Create an Account" : "Sign In")
@@ -80,7 +79,6 @@ struct LoginPage: View {
             }
             .padding(.bottom, keyboard.currentHeight)
             .animation(.easeOut(duration: 0.25), value: keyboard.currentHeight)
-        }
     }
 
     // Handle submit action for both login and registration
