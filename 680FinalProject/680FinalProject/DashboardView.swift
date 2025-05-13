@@ -10,7 +10,6 @@ import SwiftUI
 
 struct DashboardView: View {
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack(spacing: 30) {
 
@@ -64,7 +63,6 @@ struct DashboardView: View {
                     .ignoresSafeArea()
             )
         }
-    }
 }
 
 struct NavigationCardView<Destination: View>: View {
