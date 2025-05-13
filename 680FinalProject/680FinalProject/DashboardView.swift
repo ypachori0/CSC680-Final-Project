@@ -1,24 +1,31 @@
 //
-//  HomeView.swift
+//  DashboardView.swift
 //  680FinalProject
 //
 //  Created by Michelle Nguyen on 5/9/25.
 //
 
-
 import SwiftUI
+import FirebaseAuth
 
 struct DashboardView: View {
-    @Binding var dashAuth: testAuth
+    // 🔒 Optional auth binding — not currently used
+    // @Binding var dashAuth: testAuth
     
-    @State var tripService: TripManager // will be used as a binding variable in other subviews
-    
-    init (authentification: Binding<testAuth>){
+    @State var tripService = TripManager()
+    @Environment(\.presentationMode) var presentationMode // Used to go back to MainView
+
+    // Init method preserved if you want to pass auth later
+    /*
+    init(authentification: Binding<testAuth>) {
         self.tripService = TripManager()
         self._dashAuth = authentification
     }
-    
+    */
+
     var body: some View {
+        VStack {
+            // Scrollable content area
             ScrollView {
                 VStack(spacing: 30) {
 
@@ -28,6 +35,7 @@ struct DashboardView: View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
+
                         Text("Trip Dashboard")
                             .font(.title3)
                             .foregroundColor(.gray)
@@ -47,19 +55,19 @@ struct DashboardView: View {
                             icon: "dollarsign.circle",
                             title: "Expenses",
                             description: "Track and split group expenses.",
-                            destination: ExpensesView(authentication: $dashAuth) // Navigate to ExpensesView
+                            destination: ExpensesView() // Removed auth binding
                         )
 
                         NavigationCardView(
                             icon: "map",
                             title: "Map & Locations",
                             description: "See your trip spots on a map.",
-                            destination: LocationView() // Navigate to LocationView
+                            destination: LocationView()
                         )
+
                         /*
                         Button(action: {
                             populateDatabaseWithExpenses()
-                            //after logging in this should then move to the next page and make user ID
                         }) {
                             Text("It is 3am and I need this to work")
                         }
@@ -70,22 +78,52 @@ struct DashboardView: View {
                 }
                 .padding()
             }
-            .navigationBarHidden(true)
-            .background(
-                LinearGradient(gradient: Gradient(colors: [.white, .blue.opacity(0.1)]),
-                               startPoint: .topLeading,
-                               endPoint: .bottomTrailing)
-                    .ignoresSafeArea()
-            )
+
+            // Sign Out button
+            Button(action: {
+                handleSignOut()
+            }) {
+                Text("Sign Out")
+                    .foregroundColor(.red)
+                    .font(.headline)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.red.opacity(0.1))
+                    .cornerRadius(10)
+            }
+            .padding()
         }
+        .navigationBarHidden(true)
+        .background(
+            LinearGradient(gradient: Gradient(colors: [.white, .blue.opacity(0.1)]),
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
+                .ignoresSafeArea()
+        )
+    }
+
+    // MARK: - Sign Out Logic (Firebase)
+    func handleSignOut() {
+        do {
+            try Auth.auth().signOut()
+            print("User signed out")
+            presentationMode.wrappedValue.dismiss()
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+    }
+
+    // Optional helper for test backend interaction
+    /*
     func populateDatabaseWithExpenses() {
         let currentUserID = dashAuth.getCurrentUserData()?.user.uid
         let dbAccess = testBackend()
         print(currentUserID)
-        Task{
+        Task {
             let success = await dbAccess.writeExpenseData(UserID: currentUserID!)
         }
     }
+    */
 }
 
 struct NavigationCardView<Destination: View>: View {
