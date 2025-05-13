@@ -33,7 +33,8 @@ struct LoginPage: View {
 
     
     @StateObject private var keyboard = KeyboardResponder()
-    let authentification = testAuth()
+    
+    @State var authentification = testAuth()
     
     var body: some View {
         VStack(spacing: 20) {
@@ -82,7 +83,7 @@ struct LoginPage: View {
             NavigationLink(value:"Go to dashboard"){
                 Text("Loading Dashboard")
             }.navigationDestination(isPresented: $navigateToDashboard){
-                DashboardView()
+                DashboardView(authentification: $authentification)
             }
             Spacer()
         }

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @Binding var authentification: testAuth
     var body: some View {
             ScrollView {
                 VStack(spacing: 30) {
@@ -19,6 +20,13 @@ struct DashboardView: View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
+                        
+                        /*
+                        Text("\(authentification.getCurrentUserData()?.user.uid)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                        */
 
                         Text("Trip Dashboard")
                             .font(.title3)
@@ -101,8 +109,4 @@ struct NavigationCardView<Destination: View>: View {
             .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
         }
     }
-}
-
-#Preview {
-    DashboardView()
 }

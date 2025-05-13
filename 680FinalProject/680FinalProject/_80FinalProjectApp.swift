@@ -97,6 +97,9 @@ class testAuth {
     func getSuccessfulLogin() -> Bool{
         return self.successfulLogin
     }
+    func getCurrentUserData() -> AuthDataResult?{
+        return self.currentUserData
+    }
     
     //test function
     func testAddUser() -> Bool {
