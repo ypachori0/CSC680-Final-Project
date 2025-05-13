@@ -129,7 +129,7 @@ class TripManager {
 
     // Update an existing user's receipt
     func updateBill(userID: String, receiptID: String, updatedFields: [String: Any]) async -> Bool {
-        let docRef = db.collection("Expenses").document(userID).collection("Receipts").document(receiptID)
+        let docRef = db.collection("Expense").document(userID).collection("Bills").document(receiptID)
         do {
             try await docRef.updateData(updatedFields)
             return true
