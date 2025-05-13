@@ -51,7 +51,8 @@ class testAuth {
     private var email: String = ""
     private var password: String = ""
     
-    private var user = Auth.auth().currentUser
+    private var user: User? = nil
+    private var currentUserData: AuthDataResult? = nil
     
     var successfulLogin: Bool = false
     
@@ -60,28 +61,34 @@ class testAuth {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         return email.range(of: emailRegex, options: .regularExpression, range: nil, locale: nil) != nil
     }
-    func checkAuth() -> Bool{
+    func checkAuth(){
         print("Attempted to check authentification of email")
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
             if let error = error {
                 print("Error signing in: \(error)")
+                self?.successfulLogin = false
                 return
-            } else{
-                self?.user = authResult?.user ?? strongSelf.user
+            } else {
                 print("Signed in successfully")
                 self?.successfulLogin = true
+                self?.currentUserData = authResult!
+            }
+            print("reached this line of code")
+            if let testVal = self?.currentUserData?.user.uid{
+                print(testVal)
             }
         }
-        return successfulLogin
     }
     
     func setEmail(email: String){
         self.email = email
     }
-    
     func setPassword(password: String){
         self.password = password
+    }
+    func getSuccessfulLogin() -> Bool{
+        return self.successfulLogin
     }
     
     //test function

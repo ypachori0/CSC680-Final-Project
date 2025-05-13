@@ -96,10 +96,6 @@ struct EmailLoginView: View {
             print("\(email) \(password)")
             authentification.setEmail(email: email)
             authentification.setPassword(password: password)
-            if(authentification.checkAuth()){
-                print("Succesful login")
-            }
-            
         }) {
             Text("Submit")
         }

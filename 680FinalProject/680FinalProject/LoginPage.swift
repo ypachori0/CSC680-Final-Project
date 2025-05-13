@@ -54,12 +54,11 @@ struct LoginPage: View {
 
                 // Submit Button
                 Button(action: {
-                    var succesfuLogin = handleSubmit()
+                    let succesfuLogin = handleSubmit()
                     //after logging in this should then move to the next page and make user ID
                     if succesfuLogin {
+                        print("Redirect to dashboard")
                         
-                    } else {
-                        Alert(title: Text("Login Failed"), message: Text("Incorrect e-mail or password"), dismissButton: .default(<#T##label: Text##Text#>"OK"))
                     }
                 }) {
                     Text(isRegistering ? "Register" : "Sign In")
@@ -94,10 +93,13 @@ struct LoginPage: View {
         print("Signing in with \(email)")
         authentification.setEmail(email: email)
         authentification.setPassword(password: password)
-        if authentification.checkAuth() {
-            print("Successful login")
+        authentification.checkAuth()
+        if authentification.getSuccessfulLogin() {
+            print("Should Navigte to Dashboard")
             navigateToDashboard = true // Trigger navigation to DashboardView
+            return true
         }
+        return false
     }
 }
 
