@@ -14,7 +14,9 @@ struct AddEventView: View {
     @State private var eventDate: Date = Date()
     @State private var totalCost: String = ""
     @State private var attendees: String = ""
-
+    
+    let tripService = TripManager()
+    
     var body: some View {
         VStack(spacing: 20) {
             // Title Header
@@ -137,6 +139,11 @@ struct AddEventView: View {
     }
 }
 
+struct eventData {
+    var EventName: String
+    var EventDate: Date
+    var EventDescirption: String
+}
 #Preview {
     AddEventView()
 }

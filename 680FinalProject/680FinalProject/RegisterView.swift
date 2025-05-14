@@ -55,11 +55,6 @@ struct RegisterView: View {
                 }
                 .padding(.horizontal)
                 
-                NavigationLink(value:"Go to home"){
-                    Text("Loading Dashboard")
-                }.navigationDestination(isPresented: $navigateToHomeView){
-                    LoginPage()                }
-                
                 Spacer()
             }
             .padding()

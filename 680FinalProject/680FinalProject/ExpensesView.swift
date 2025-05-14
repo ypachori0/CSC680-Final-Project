@@ -29,7 +29,6 @@ struct ExpensesView: View {
     init (authentication: Binding<testAuth>){
         self._expenseAuth = authentication //passed auth data from dash
         expenses = []
-        currentUID = authentication.wrappedValue.getCurrentUserData()!.user.uid
         
     }
 
@@ -87,7 +86,7 @@ struct ExpensesView: View {
 
     // Function to simulate adding a new expense
     private func addNewExpense() {
-        let newExpense = Expense(name: "New Item", amount: 100.00, people: ["New Member", "You"])
+        let newExpense = Expense(name: "New Item", amount: Double.random(in: 0...300), people: ["New Member", "You"])
         expenses.append(newExpense)
         
         // Recalculate total expenses and amount owed

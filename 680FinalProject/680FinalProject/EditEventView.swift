@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct EditEventView: View {
-    var eventID: String // Pass the event ID for editing
     
     @State private var eventName: String = "Sample Event"
     @State private var eventLocation: String = "Sample Location"
@@ -55,9 +54,4 @@ struct EditEventView: View {
         .padding()
         .navigationBarTitle("Edit Event", displayMode: .inline)
     }
-}
-
-// Preview for EditEventView
-#Preview {
-    EditEventView(eventID: "mockEventID123")  // Pass a mock eventID for preview
 }

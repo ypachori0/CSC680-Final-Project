@@ -34,6 +34,9 @@ struct ItineraryView: View {
                 }
             }
             .padding()
+            NavigationLink(destination: AddEventView()){
+                Text("Create Event")
+            }
         }
         // Removed redundant navigation bar title to avoid stacking headers
     }
@@ -99,6 +102,9 @@ struct EventCardView: View {
             }
 
             Spacer()
+            NavigationLink(destination: EditEventView()){
+                Text("Edit Event")
+            }
         }
         .padding()
         .background(Color(.systemGray6))
