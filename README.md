@@ -19,7 +19,6 @@ Simplifies planning a group trip by organizing itineraries, lodging info, and sh
 - Automatic expense splitting and settlement calculations  
 - MapKit integration to list all planned spots or lodging locations  
 
-Sign in is required:
-(TEST CREDENTIALS)
-Email: test@test.com
-Password: Test!1234
+## Sign in is required (TEST ACCOUNT CREDENTIALS BELOW)
+- Email: test@test.com
+- Password: Test!1234
