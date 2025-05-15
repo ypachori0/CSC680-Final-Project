@@ -4,8 +4,8 @@
 Simplifies planning a group trip by organizing itineraries, lodging info, and shared expenses.
 
 ## Team Members  
-- Yash (ADD YOUR LAST NAME) - ypachori0
-- Majd (ADD YOUR LAST NAME) - majda1najjar
+- Yash Pachori - ypachori0
+- Majd Al-Shemari - majda1najjar
 - Thomas Bercasio - TPBvirus
 - Michelle Nguyen - michenguyen7
 
