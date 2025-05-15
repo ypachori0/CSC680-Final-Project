@@ -22,8 +22,6 @@ This iOS application simplifies planning a group trip by helping users organize 
   - Displays date-by-date breakdown of planned events
 - 💰 **Expense tracking**
   - Users can log expenses and see who paid for what
-- 🔔 **Push notifications**
-  - (Planned) Notify users about itinerary updates
 
 ---
 
